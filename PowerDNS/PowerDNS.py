@@ -29,19 +29,23 @@ class PowerDNS:
 
         self.previous_run = {}
         for metric in self.counter_metrics:
-            self.previous_run[metric] = 0
+            self.previous_run[metric] = -1
 
         self.gauge_metrics = ['latency']
 
     def query(self, metric):
         try:
             proc = Popen(['/usr/bin/sudo', self.pdns_path, 'mrtg', metric], stdout=PIPE)
-            output = proc.communicate()[0].strip('\n')
+            output = proc.communicate()[0].split('\n')
             value = int(output[0])
             self.checks_logger.debug('PowerDNS current value %s:%s' % (metric, value))
             if metric in self.counter_metrics:
                 count_diff = value - self.previous_run[metric]
                 if value > self.previous_run[metric]:
+                    if self.previous_run[metric] < 0:
+                        # first run
+                        self.previous_run[metric] = value
+                        return 0
                     self.previous_run[metric] = value
                 return count_diff
             else:
