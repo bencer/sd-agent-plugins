@@ -402,6 +402,10 @@ class MySQL(object):
             # open files
             status['open files'] = status_metrics['Open_files']
             status['open files limit'] = status_variables['open_files_limit']
+            status['Open files usage %'] = (
+                (status['open files'] /
+                    status['open files limit'])*100
+            )
             self.checks_logger.debug('mysql: getting open_files - done')
 
             # table_locks_waited
