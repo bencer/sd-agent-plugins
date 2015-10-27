@@ -30,6 +30,9 @@ COMMANDS = [
     'Handler_rollback',
     'Handler_read_first',
     'Handler_read_rnd',
+    'Handler_read_rnd_next',
+    'Handler_read_key',
+    'Handler_read_next',
 ]
 
 
