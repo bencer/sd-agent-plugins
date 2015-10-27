@@ -265,8 +265,8 @@ class MySQL(object):
             #     else:
             #         query = 'SHOW STATUS LIKE "Slow_queries'
 
-            # QPS - Queries per second.
-            status['Queries per second'] = self.calculate_per_s(
+            # QPS - Queries per second
+            status['Queries/s'] = self.calculate_per_s(
                 'qps', status_metrics['Queries']
             )
             # Note check for which version of mysql
