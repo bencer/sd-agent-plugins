@@ -411,6 +411,10 @@ class MySQL(object):
             )
             self.checks_logger.debug('mysql: getting open_files - done')
 
+            # open tables
+            status['open tables'] = status_metrics['Open_tables']
+            self.checks_logger.debug('mysql: getting open_tables - done')
+
             # table_locks_waited
             status['table locks waited'] = status_metrics['Table_locks_waited']
             self.checks_logger.debug(
