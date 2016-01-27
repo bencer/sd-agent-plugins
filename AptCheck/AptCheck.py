@@ -1,6 +1,7 @@
 #
-# Apt check Server Density plugin
-# V0.1
+# AptCheck Server Density plugin
+# checks for security and standard updates on Ubuntu
+# requires update-notifier-common package
 #
 # (c) Jorge Salamero Sanz <bencer@gmail.com>
 #
@@ -10,6 +11,7 @@ import sys
 import json
 import logging
 import time
+
 
 class AptCheck(object):
 
@@ -22,12 +24,14 @@ class AptCheck(object):
     def run(self):
         security = total = -1
         try:
-	    data = subprocess.check_output([self.cmd_path,],stderr=subprocess.STDOUT)
+            data = subprocess.check_output([self.cmd_path, ],
+                                           stderr=subprocess.STDOUT)
             (security, total) = data.split(';')
         except Exception as e:
-            self.checks_logger.error('Failed to run script %s: %s' % (self.cmd_path, e))
+            self.checks_logger.error('Failed to run script %s: %s' %
+                                     (self.cmd_path, e))
 
-	return_data = {'security_updates': security, 'total_updates': total}
+        return_data = {'security_updates': security, 'total_updates': total}
         return return_data
 
 if __name__ == '__main__':
